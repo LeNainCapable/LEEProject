@@ -52,16 +52,22 @@ public class EtudiantFacadeTest {
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
+        
+        
         DataInit.createTables();
-        
-        //Session session = DBConnection.getSession();
-        SessionFactory sf = new Configuration().configure("database/connection.cfg.xml").buildSessionFactory();
-        Session session = sf.openSession();
-        
+        System.out.println("Create tables");
+        SessionFactory sf = database.DBConnection.getSessionFactory();
+        System.out.println("Create tables");
+        Session session = database.DBConnection.getSession();
+        System.out.println("created session");
         session.beginTransaction();
+        System.out.println("transaction began");
         Personne e = new Personne(Long.MIN_VALUE, "Quentin", "Amelot", 21, 1, "test");
-        session.persist(e);
-        session.getTransaction().commit();
+        System.out.println("created person");
+        //session.persist(e);
+        System.out.println("persisted");
+        //session.getTransaction().commit();
+        System.out.println("commited");
         session.close();
     }
 

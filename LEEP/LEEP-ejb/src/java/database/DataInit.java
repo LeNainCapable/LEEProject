@@ -7,7 +7,7 @@ public class DataInit {
 
 	public static void createTables() {
 		Configuration config = DBConnection.getConfig();
-		SchemaExport schemaExport = new SchemaExport(config);
-		schemaExport.create(true, true);
+		//SchemaExport schemaExport = new SchemaExport(config);
+		//schemaExport.create(true, true);
 	}
 }
