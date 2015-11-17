@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 9 nov. 2015 11:38:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="persistence.Enseignement" table="enseignement" catalog="leep" optimistic-lock="version">
+        <id name="idEnseignement" type="java.lang.Long">
+            <column name="idEnseignement" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="enseignement" class="persistence.Enseignement" fetch="select">
+            <column name="idEnseignant" not-null="true" />
+        </many-to-one>
+        <property name="nom" type="string">
+            <column name="nom" length="20" not-null="true" />
+        </property>
+        <property name="nbTd" type="int">
+            <column name="nbTD" not-null="true" />
+        </property>
+        <property name="nbSem" type="int">
+            <column name="nbSem" not-null="true" />
+        </property>
+        <set name="formations" table="formation_enseignement" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idEnseignement" not-null="true" />
+            </key>
+            <many-to-many entity-name="persistence.Formation">
+                <column name="idFormation" not-null="true" unique="true" />
+            </many-to-many>
+        </set>
+        <set name="courses" table="cours" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idEnseignement" not-null="true" />
+            </key>
+            <one-to-many class="persistence.Cours" />
+        </set>
+        <set name="enseignements" table="enseignement" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idEnseignant" not-null="true" />
+            </key>
+            <one-to-many class="persistence.Enseignement" />
+        </set>
+    </class>
+</hibernate-mapping>
