@@ -50,7 +50,7 @@ public class Formation implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "formation")
     private FormationEnseignement formationEnseignement;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFormation")
-    private Collection<Etudiant> etudiantCollection;
+    private Collection<Personne> personneCollection;
 
     public Formation() {
     }
@@ -89,12 +89,12 @@ public class Formation implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Etudiant> getEtudiantCollection() {
-        return etudiantCollection;
+    public Collection<Personne> getPersonneCollection() {
+        return personneCollection;
     }
 
-    public void setEtudiantCollection(Collection<Etudiant> etudiantCollection) {
-        this.etudiantCollection = etudiantCollection;
+    public void setPersonneCollection(Collection<Personne> personneCollection) {
+        this.personneCollection = personneCollection;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class Formation implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Formation[ idFormation=" + idFormation + " ]";
+        return "entity.Formation[ idFormation=" + idFormation + " ]";
     }
     
 }

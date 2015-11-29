@@ -38,17 +38,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cours.findByHeureDebut", query = "SELECT c FROM Cours c WHERE c.heureDebut = :heureDebut"),
     @NamedQuery(name = "Cours.findByHeureFin", query = "SELECT c FROM Cours c WHERE c.heureFin = :heureFin")})
 public class Cours implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "nom")
-    private String nom;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idCours")
     private Long idCours;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "nom")
+    private String nom;
     @Basic(optional = false)
     @NotNull
     @Column(name = "heureDebut")
@@ -85,6 +85,13 @@ public class Cours implements Serializable {
         this.idCours = idCours;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
     public Date getHeureDebut() {
         return heureDebut;
@@ -132,15 +139,7 @@ public class Cours implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Cours[ idCours=" + idCours + " ]";
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
+        return "entity.Cours[ idCours=" + idCours + " ]";
     }
     
 }

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -37,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personne.findByPrenom", query = "SELECT p FROM Personne p WHERE p.prenom = :prenom"),
     @NamedQuery(name = "Personne.findByAge", query = "SELECT p FROM Personne p WHERE p.age = :age"),
     @NamedQuery(name = "Personne.findByLogin", query = "SELECT p FROM Personne p WHERE p.login = :login"),
-    @NamedQuery(name = "Personne.findByPassword", query = "SELECT p FROM Personne p WHERE p.password = :password")})
+    @NamedQuery(name = "Personne.findByPassword", query = "SELECT p FROM Personne p WHERE p.password = :password"),
+    @NamedQuery(name = "Personne.findByIsProf", query = "SELECT p FROM Personne p WHERE p.isProf = :isProf")})
 public class Personne implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,10 +71,15 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "password")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personne")
-    private Collection<Enseignant> enseignantCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isProf")
+    private boolean isProf;
+    @JoinColumn(name = "idFormation", referencedColumnName = "idFormation")
+    @ManyToOne(optional = false)
+    private Formation idFormation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersonne")
-    private Collection<Etudiant> etudiantCollection;
+    private Collection<Enseignement> enseignementCollection;
 
     public Personne() {
     }
@@ -80,13 +88,14 @@ public class Personne implements Serializable {
         this.idPersonne = idPersonne;
     }
 
-    public Personne(Long idPersonne, String nom, String prenom, int age, int login, String password) {
+    public Personne(Long idPersonne, String nom, String prenom, int age, int login, String password, boolean isProf) {
         this.idPersonne = idPersonne;
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
         this.login = login;
         this.password = password;
+        this.isProf = isProf;
     }
 
     public Long getIdPersonne() {
@@ -137,22 +146,29 @@ public class Personne implements Serializable {
         this.password = password;
     }
 
+    public boolean getIsProf() {
+        return isProf;
+    }
+
+    public void setIsProf(boolean isProf) {
+        this.isProf = isProf;
+    }
+
+    public Formation getIdFormation() {
+        return idFormation;
+    }
+
+    public void setIdFormation(Formation idFormation) {
+        this.idFormation = idFormation;
+    }
+
     @XmlTransient
-    public Collection<Enseignant> getEnseignantCollection() {
-        return enseignantCollection;
+    public Collection<Enseignement> getEnseignementCollection() {
+        return enseignementCollection;
     }
 
-    public void setEnseignantCollection(Collection<Enseignant> enseignantCollection) {
-        this.enseignantCollection = enseignantCollection;
-    }
-
-    @XmlTransient
-    public Collection<Etudiant> getEtudiantCollection() {
-        return etudiantCollection;
-    }
-
-    public void setEtudiantCollection(Collection<Etudiant> etudiantCollection) {
-        this.etudiantCollection = etudiantCollection;
+    public void setEnseignementCollection(Collection<Enseignement> enseignementCollection) {
+        this.enseignementCollection = enseignementCollection;
     }
 
     @Override
@@ -177,7 +193,7 @@ public class Personne implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Personne[ idPersonne=" + idPersonne + " ]";
+        return "entity.Personne[ idPersonne=" + idPersonne + " ]";
     }
     
 }

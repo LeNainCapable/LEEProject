@@ -62,11 +62,9 @@ public class Enseignement implements Serializable {
     private Collection<FormationEnseignement> formationEnseignementCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEnseignement")
     private Collection<Cours> coursCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEnseignant")
-    private Collection<Enseignement> enseignementCollection;
-    @JoinColumn(name = "idEnseignant", referencedColumnName = "idEnseignant")
+    @JoinColumn(name = "idPersonne", referencedColumnName = "idPersonne")
     @ManyToOne(optional = false)
-    private Enseignement idEnseignant;
+    private Personne idPersonne;
 
     public Enseignement() {
     }
@@ -132,21 +130,12 @@ public class Enseignement implements Serializable {
         this.coursCollection = coursCollection;
     }
 
-    @XmlTransient
-    public Collection<Enseignement> getEnseignementCollection() {
-        return enseignementCollection;
+    public Personne getIdPersonne() {
+        return idPersonne;
     }
 
-    public void setEnseignementCollection(Collection<Enseignement> enseignementCollection) {
-        this.enseignementCollection = enseignementCollection;
-    }
-
-    public Enseignement getIdEnseignant() {
-        return idEnseignant;
-    }
-
-    public void setIdEnseignant(Enseignement idEnseignant) {
-        this.idEnseignant = idEnseignant;
+    public void setIdPersonne(Personne idPersonne) {
+        this.idPersonne = idPersonne;
     }
 
     @Override
@@ -171,7 +160,7 @@ public class Enseignement implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.Enseignement[ idEnseignement=" + idEnseignement + " ]";
+        return "entity.Enseignement[ idEnseignement=" + idEnseignement + " ]";
     }
     
 }

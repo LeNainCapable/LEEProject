@@ -75,7 +75,7 @@ public class FormationEnseignementPK implements Serializable {
 
     @Override
     public String toString() {
-        return "persistence.FormationEnseignementPK[ idFormation=" + idFormation + ", idEnseignement=" + idEnseignement + " ]";
+        return "entity.FormationEnseignementPK[ idFormation=" + idFormation + ", idEnseignement=" + idEnseignement + " ]";
     }
     
 }
