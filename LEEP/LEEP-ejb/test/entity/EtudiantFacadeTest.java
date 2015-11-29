@@ -5,8 +5,6 @@
  */
 package entity;
 
-import database.DBConnection;
-import database.DataInit;
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
 import org.hibernate.Session;
@@ -54,13 +52,9 @@ public class EtudiantFacadeTest {
         System.out.println("create");
         
         
-        DataInit.createTables();
+        
         System.out.println("Create tables");
-        SessionFactory sf = database.DBConnection.getSessionFactory();
-        System.out.println("Create tables");
-        Session session = database.DBConnection.getSession();
         System.out.println("created session");
-        session.beginTransaction();
         System.out.println("transaction began");
         Personne e = new Personne(Long.MIN_VALUE, "Quentin", "Amelot", 21, 1, "test");
         System.out.println("created person");
@@ -68,7 +62,6 @@ public class EtudiantFacadeTest {
         System.out.println("persisted");
         //session.getTransaction().commit();
         System.out.println("commited");
-        session.close();
     }
 
     /**
@@ -77,8 +70,6 @@ public class EtudiantFacadeTest {
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
-        DataInit.createTables();
-        Session session = DBConnection.getSession();
     }
 
     /**
