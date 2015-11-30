@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package persistence;
 
+import entity.Personne;
 import java.util.List;
 import javax.ejb.Local;
-import persistence.Personne;
 
 /**
  *
- * @author Quentin
+ * @author Fayize Kaimou
  */
 @Local
 public interface PersonneFacadeLocal {

@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package persistence;
 
+import entity.Enseignant;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import persistence.Personne;
 
 /**
  *
- * @author Quentin
+ * @author Fayize Kaimou
  */
 @Stateless
-public class PersonneFacade extends AbstractFacade<Personne> implements PersonneFacadeLocal {
+public class EnseignantFacade extends AbstractFacade<Enseignant> implements EnseignantFacadeLocal {
     @PersistenceContext(unitName = "LEEP-ejbPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
         return em;
     }
 
-    public PersonneFacade() {
-        super(Personne.class);
+    public EnseignantFacade() {
+        super(Enseignant.class);
     }
     
 }

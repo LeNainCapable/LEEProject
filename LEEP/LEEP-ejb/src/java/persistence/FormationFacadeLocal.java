@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package persistence;
 
+import entity.Formation;
 import java.util.List;
 import javax.ejb.Local;
-import persistence.Formation;
 
 /**
  *
- * @author Quentin
+ * @author Fayize Kaimou
  */
 @Local
 public interface FormationFacadeLocal {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Quentin
+ * @author Fayize Kaimou
  */
 @Entity
 @Table(name = "formation")
@@ -47,10 +46,8 @@ public class Formation implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "nom")
     private String nom;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "formation")
-    private FormationEnseignement formationEnseignement;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFormation")
-    private Collection<Personne> personneCollection;
+    private Collection<Etudiant> etudiantCollection;
 
     public Formation() {
     }
@@ -80,21 +77,13 @@ public class Formation implements Serializable {
         this.nom = nom;
     }
 
-    public FormationEnseignement getFormationEnseignement() {
-        return formationEnseignement;
-    }
-
-    public void setFormationEnseignement(FormationEnseignement formationEnseignement) {
-        this.formationEnseignement = formationEnseignement;
-    }
-
     @XmlTransient
-    public Collection<Personne> getPersonneCollection() {
-        return personneCollection;
+    public Collection<Etudiant> getEtudiantCollection() {
+        return etudiantCollection;
     }
 
-    public void setPersonneCollection(Collection<Personne> personneCollection) {
-        this.personneCollection = personneCollection;
+    public void setEtudiantCollection(Collection<Etudiant> etudiantCollection) {
+        this.etudiantCollection = etudiantCollection;
     }
 
     @Override

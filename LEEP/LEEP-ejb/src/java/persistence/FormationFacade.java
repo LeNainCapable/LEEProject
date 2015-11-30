@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package persistence;
 
+import entity.Formation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import persistence.Formation;
 
 /**
  *
- * @author Quentin
+ * @author Fayize Kaimou
  */
 @Stateless
 public class FormationFacade extends AbstractFacade<Formation> implements FormationFacadeLocal {
