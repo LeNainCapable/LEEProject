@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,6 +47,8 @@ public class Formation implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "nom")
     private String nom;
+    @ManyToMany(mappedBy = "formationCollection")
+    private Collection<Enseignement> enseignementCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFormation")
     private Collection<Etudiant> etudiantCollection;
 
@@ -75,6 +78,15 @@ public class Formation implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    @XmlTransient
+    public Collection<Enseignement> getEnseignementCollection() {
+        return enseignementCollection;
+    }
+
+    public void setEnseignementCollection(Collection<Enseignement> enseignementCollection) {
+        this.enseignementCollection = enseignementCollection;
     }
 
     @XmlTransient

@@ -6,9 +6,12 @@
 package persistence;
 
 import entity.Etudiant;
+import entity.Formation;
+import entity.Personne;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +30,20 @@ public class EtudiantFacade extends AbstractFacade<Etudiant> implements Etudiant
     public EtudiantFacade() {
         super(Etudiant.class);
     }
+    
+    public void create(Personne personne, Formation formation) {
+
+        Etudiant e = new Etudiant();
+        e.setIdFormation(formation);
+        e.setIdPersonne(personne);
+        create(e);
+    }
+    
+    public void create(String nom, String prenom,int age, int login, String password, Formation formation){
+        Personne p = new Personne(null,nom,prenom,age,login,password);
+        create(p, formation);
+    }
+    
+    
     
 }

@@ -6,8 +6,12 @@
 package Administration;
 
 
+import entity.Cours;
 import entity.Enseignant;
+import entity.Enseignement;
 import entity.Etudiant;
+import entity.Formation;
+import entity.FormationEnseignement;
 import persistence.PersonneFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +24,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import entity.Personne;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+import persistence.CoursFacadeLocal;
 import persistence.EnseignantFacadeLocal;
+import persistence.EnseignementFacadeLocal;
 import persistence.EtudiantFacadeLocal;
+import persistence.FormationEnseignementFacadeLocal;
+import persistence.FormationFacadeLocal;
 
 /**
  *
@@ -29,7 +40,14 @@ import persistence.EtudiantFacadeLocal;
  */
 @WebServlet(name = "AdminEDT", urlPatterns = {"/AdminEDT"})
 public class Admin extends HttpServlet {
-    
+    @EJB
+    private FormationEnseignementFacadeLocal formationEnseignementFacade;
+    @EJB
+    private FormationFacadeLocal formationFacade;
+    @EJB
+    private EnseignementFacadeLocal enseignementFacade;
+    @EJB
+    private CoursFacadeLocal coursFacade;
     @EJB
     private EtudiantFacadeLocal etudiantFacade;
     @EJB
@@ -56,31 +74,72 @@ public class Admin extends HttpServlet {
             out.println("<title>Administration Emploi du temps</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Ajouter un nouveau type de pizza : </h1>");
+            out.println("<h1>Truc</h1>");
+                      out.println("<br/> Liste des personne<br/>");
                List lPersonne = personneFacade.findAll();
             for (Iterator it = lPersonne.iterator(); it.hasNext();) {
                 Personne elem = (Personne) it.next();
-                //Stock s = stockFacade.findQuantiteByPizzaId(elem);
-                out.println("Id Personne : <b>" + elem.getIdPersonne() + " </b> ");
-                out.println("Prenom : " + elem.getPrenom()+ "<br/>");
+                out.println( "Personne : <b>" + elem.getIdPersonne() + " </b> ");
+                out.println("Nom et prenom : " + elem.getNom() + " "+ elem.getPrenom()+ "<br/>");
                 
-            }    
+            }
+            out.println("<br/> Liste des enseignant<br/>");
             List lEnseignant = enseignantFacade.findAll();
             for (Iterator it = lEnseignant.iterator(); it.hasNext();) {
                 Enseignant elem = (Enseignant) it.next();
-                //Stock s = stockFacade.findQuantiteByPizzaId(elem);
-                out.println("Nom : <b>" + elem.getIdPersonne().getNom() + " </b> ");
+                out.println("Enseignant : <b>" + elem.getIdPersonne().getNom() + " </b> ");
                 out.println("Id : " + elem.getIdEnseignant()+ "<br/>");
+                 out.println("Liste d'enseignement<br/>");
+                for (Iterator itz = elem.getEnseignementCollection().iterator(); itz.hasNext();) {
+                        Enseignement en = (Enseignement) itz.next();
+                        out.println("-Nom : <b>" + en.getNom() + " </b> ");
+                }
                 
             } 
+            out.println("<br/> Liste des etudiant<br/>");
             List lEtudiant = etudiantFacade.findAll();
             for (Iterator it = lEtudiant.iterator(); it.hasNext();) {
                 Etudiant elem = (Etudiant) it.next();
-                //Stock s = stockFacade.findQuantiteByPizzaId(elem);
-                out.println("Nom : <b>" + elem.getIdPersonne().getNom() + " </b> ");
-                out.println("Id : " + elem.getIdFormation().getNom()+ "<br/>");
+                out.println("Etudiant : <b>" + elem.getIdPersonne().getNom() + " </b> ");
+                out.println("Formation : " + elem.getIdFormation().getNom()+ "<br/>");
                 
+            } 
+                      
+            out.println("<br/> Liste des enseignement<br/>");
+            List lEnseignement = enseignementFacade.findAll();
+            for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                Enseignement elem = (Enseignement) it.next();
+                out.println("Enseignement : <b>" + elem.getNom() + " </b> ");
+                out.println("Id : " + elem.getIdEnseignement()+
+                        "Enseignant responsable"+ elem.getIdEnseignant().getIdPersonne().getNom()+ "<br/>");               
             }      
+            out.println("<br/> Liste des cours<br/>");          
+            List lCours = coursFacade.findAll();
+            for (Iterator it = lCours.iterator(); it.hasNext();) {
+                Cours elem = (Cours) it.next();
+                out.println("Cours : <b>" + elem.getNom() + " </b> ");
+                out.println("Id : " + elem.getIdEnseignement().getNom()+ "<br/>");    
+            }
+            out.println("<br/> Liste de formation<br/>");
+            List lFormation = formationFacade.findAll();
+            for (Iterator it = lFormation.iterator(); it.hasNext();) {
+                Formation elem = (Formation) it.next();
+                out.println("Formation : <b>" + elem.getNom() + " </b> ");
+                out.println("Id : " + elem.getIdFormation());
+                out.println("Nb n'enseignement : " + elem.getEnseignementCollection().size());
+                out.println(" Effectif" +   elem.getEtudiantCollection().size() +"<br/>");
+                out.println("List d'élèves<br/>");
+                for (Iterator itz = elem.getEtudiantCollection().iterator(); itz.hasNext();) {
+                        Etudiant el = (Etudiant) itz.next();
+                        out.println("-Nom : <b>" + el.getIdPersonne().getNom() + " </b> ");
+                    }
+                out.println("<br/>Liste d'enseignement<br/>");
+                for (Iterator itz = elem.getEnseignementCollection().iterator(); itz.hasNext();) {
+                        Enseignement en = (Enseignement) itz.next();
+                        out.println("-Nom : <b>" + en.getNom() + " </b> ");
+                }
+            }      
+            
             String type=null;
             type=request.getParameter("type");
             if (type!=null) {
@@ -95,7 +154,35 @@ public class Admin extends HttpServlet {
                     //e.setPrix(prix);
                     //pizzaFacade.create(e);
                     //stockFacade.create(type,quantite);
-                    response.sendRedirect("AdminPizza");
+                    //Personne p = new Personne(null,"future","rfuture",4,5,"arer");
+                    long etu = 1;
+                    long ettt =45;
+                    Personne p = personneFacade.find(etu);
+                    p.setNom("Testboogaloa");
+                    personneFacade.edit(p);
+                    //personneFacade.create(p);
+                    System.out.println(p.getIdPersonne());
+                    long l = 1;
+                    Etudiant e = etudiantFacade.find(l);
+                    e.getIdPersonne().setNom("testbooogalo2");
+                    personneFacade.edit(e.getIdPersonne());
+                    Enseignement en = new Enseignement();
+                    //en.setCoursCollection(new ArrayList());
+                    //en.getCoursCollection().add(coursFacade.find(l));
+                    en.setNbSem(5);
+                    en.setNom("Notjava67");
+                    Enseignant eee = enseignantFacade.create(personneFacade.find(ettt));
+                    enseignementFacade.create("nokavaz", 6, eee);
+                    //Formation f = formationFacade.find(l);
+                    //f.getEnseignementCollection().add(en);
+                    //formationFacade.edit(f);
+
+                    //formationEnseignementFacade.create(f,en);
+                    //etudiantFacade.edit(e);
+                    //etudiantFacade.edit(p, formationFacade.find(l));
+                    //personneFacade.create("k", "y", 4, 5, "ooooo");
+                    
+                    response.sendRedirect("AdminEDT");
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -108,12 +195,23 @@ public class Admin extends HttpServlet {
                 out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
                 out.println("<input type='submit'><br/>");
                 out.println("</form>");
+            out.println("<select name='pays' id='enseignement'>"); 
+            for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                Enseignement elem = (Enseignement) it.next();
+                out.println("<option value='" + elem.getIdEnseignement()+"'>"+ elem.getNom()+ "</option>");               
+            }      
+            
+            out.println("</select>");
             }
             out.println("</body>");
             out.println("</html>");
-        }
-    }
+            
 
+            
+            
+        }
+                                   
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

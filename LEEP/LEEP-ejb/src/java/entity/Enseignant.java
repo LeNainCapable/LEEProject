@@ -6,18 +6,22 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,8 +40,10 @@ public class Enseignant implements Serializable {
     @Basic(optional = false)
     @Column(name = "idEnseignant")
     private Long idEnseignant;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEnseignant")
+    private Collection<Enseignement> enseignementCollection;
     @JoinColumn(name = "idPersonne", referencedColumnName = "idPersonne")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Personne idPersonne;
 
     public Enseignant() {
@@ -53,6 +59,15 @@ public class Enseignant implements Serializable {
 
     public void setIdEnseignant(Long idEnseignant) {
         this.idEnseignant = idEnseignant;
+    }
+
+    @XmlTransient
+    public Collection<Enseignement> getEnseignementCollection() {
+        return enseignementCollection;
+    }
+
+    public void setEnseignementCollection(Collection<Enseignement> enseignementCollection) {
+        this.enseignementCollection = enseignementCollection;
     }
 
     public Personne getIdPersonne() {

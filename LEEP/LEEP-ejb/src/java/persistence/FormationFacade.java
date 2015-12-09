@@ -28,4 +28,10 @@ public class FormationFacade extends AbstractFacade<Formation> implements Format
         super(Formation.class);
     }
     
+    public void create(String nom){
+        Formation f = new Formation();
+        f.setNom(nom);
+        create(f);
+    }
+    
 }

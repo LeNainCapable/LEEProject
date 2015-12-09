@@ -6,6 +6,7 @@
 package persistence;
 
 import entity.Enseignant;
+import entity.Personne;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,6 @@ public interface EnseignantFacadeLocal {
 
     int count();
     
+    Enseignant create(Personne personne);
+    Enseignant create(String nom, String prenom,int age, int login, String password);
 }

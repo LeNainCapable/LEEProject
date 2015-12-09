@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,7 +41,7 @@ public class Etudiant implements Serializable {
     @ManyToOne(optional = false)
     private Formation idFormation;
     @JoinColumn(name = "idPersonne", referencedColumnName = "idPersonne")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Personne idPersonne;
 
     public Etudiant() {

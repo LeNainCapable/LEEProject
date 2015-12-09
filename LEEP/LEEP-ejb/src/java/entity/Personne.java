@@ -6,7 +6,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,12 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -68,10 +66,10 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "password")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersonne")
-    private Collection<Enseignant> enseignantCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersonne")
-    private Collection<Etudiant> etudiantCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPersonne")
+    private Enseignant enseignant;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPersonne")
+    private Etudiant etudiant;
 
     public Personne() {
     }
@@ -137,22 +135,20 @@ public class Personne implements Serializable {
         this.password = password;
     }
 
-    @XmlTransient
-    public Collection<Enseignant> getEnseignantCollection() {
-        return enseignantCollection;
+    public Enseignant getEnseignant() {
+        return enseignant;
     }
 
-    public void setEnseignantCollection(Collection<Enseignant> enseignantCollection) {
-        this.enseignantCollection = enseignantCollection;
+    public void setEnseignant(Enseignant enseignant) {
+        this.enseignant = enseignant;
     }
 
-    @XmlTransient
-    public Collection<Etudiant> getEtudiantCollection() {
-        return etudiantCollection;
+    public Etudiant getEtudiant() {
+        return etudiant;
     }
 
-    public void setEtudiantCollection(Collection<Etudiant> etudiantCollection) {
-        this.etudiantCollection = etudiantCollection;
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
 
     @Override

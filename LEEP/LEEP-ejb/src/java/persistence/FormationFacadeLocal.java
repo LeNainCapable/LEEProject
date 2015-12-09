@@ -30,4 +30,6 @@ public interface FormationFacadeLocal {
 
     int count();
     
+    void create(String Nom);
+    
 }

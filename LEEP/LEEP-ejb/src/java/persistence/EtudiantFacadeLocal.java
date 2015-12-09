@@ -6,6 +6,8 @@
 package persistence;
 
 import entity.Etudiant;
+import entity.Formation;
+import entity.Personne;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +31,6 @@ public interface EtudiantFacadeLocal {
     List<Etudiant> findRange(int[] range);
 
     int count();
+    void create(Personne personne, Formation formation);
     
 }

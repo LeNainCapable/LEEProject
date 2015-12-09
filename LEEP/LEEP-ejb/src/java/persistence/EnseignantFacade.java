@@ -6,6 +6,9 @@
 package persistence;
 
 import entity.Enseignant;
+import entity.Etudiant;
+import entity.Formation;
+import entity.Personne;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +30,15 @@ public class EnseignantFacade extends AbstractFacade<Enseignant> implements Ense
     public EnseignantFacade() {
         super(Enseignant.class);
     }
+    public Enseignant create(Personne personne) {
+        Enseignant e = new Enseignant();
+        e.setIdPersonne(personne);
+        create(e);
+        return e;
+    }
     
+    public Enseignant create(String nom, String prenom,int age, int login, String password){
+        Personne p = new Personne(null,nom,prenom,age,login,password);
+        return create(p);
+    }
 }
