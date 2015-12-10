@@ -34,8 +34,6 @@ public class EnseignementFacade extends AbstractFacade<Enseignement> implements 
     
     public Enseignement create(String nom, int sem, Enseignant enseignant){
         Enseignement en = new Enseignement();
-        //en.setCoursCollection(new ArrayList());
-        //en.getCoursCollection().add(coursFacade.find(l));
         en.setNbSem(sem);
         en.setNom(nom);
         en.setIdEnseignant(enseignant);        

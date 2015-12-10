@@ -2,26 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/CoursFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/CoursFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/EnseignementFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/EtudiantFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/entity/Enseignement.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/entity/FormationEnseignement.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/FormationFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/AbstractFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/FormationEnseignementFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/PersonneFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/FormationFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/EnseignantFacade.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/entity/Personne.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/PersonneFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/entity/Formation.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/FormationEnseignementFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/EnseignantFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/EnseignementFacadeLocal.java</file>
-            <file>file:/C:/Programmation/Projet%20Master/LEEProject/LEEP/LEEP-ejb/src/java/persistence/EtudiantFacade.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

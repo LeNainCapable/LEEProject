@@ -75,6 +75,8 @@ public class Admin extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Truc</h1>");
+            
+            out.println("<a  href=\"./ClientEDT\" >Client</a>");
                       out.println("<br/> Liste des personne<br/>");
                List lPersonne = personneFacade.findAll();
             for (Iterator it = lPersonne.iterator(); it.hasNext();) {
@@ -148,13 +150,7 @@ public class Admin extends HttpServlet {
                     prix=new Integer(request.getParameter("prix"));
                     int quantite=new Integer(request.getParameter("quantite"));             
                     out.println("On ajoute un type de pizza<br/>");
-
-                    //Pizza e = new Pizza();
-                    //e.setPizzaId(type);
-                    //e.setPrix(prix);
-                    //pizzaFacade.create(e);
-                    //stockFacade.create(type,quantite);
-                    //Personne p = new Personne(null,"future","rfuture",4,5,"arer");
+/*
                     long etu = 1;
                     long ettt =45;
                     Personne p = personneFacade.find(etu);
@@ -180,7 +176,7 @@ public class Admin extends HttpServlet {
                     //formationEnseignementFacade.create(f,en);
                     //etudiantFacade.edit(e);
                     //etudiantFacade.edit(p, formationFacade.find(l));
-                    //personneFacade.create("k", "y", 4, 5, "ooooo");
+                    //personneFacade.create("k", "y", 4, 5, "ooooo");*/
                     
                     response.sendRedirect("AdminEDT");
 
