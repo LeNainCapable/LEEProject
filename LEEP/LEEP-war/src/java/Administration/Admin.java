@@ -5,7 +5,6 @@
  */
 package Administration;
 
-
 import entity.Cours;
 import entity.Enseignant;
 import entity.Enseignement;
@@ -40,6 +39,7 @@ import persistence.FormationFacadeLocal;
  */
 @WebServlet(name = "AdminEDT", urlPatterns = {"/AdminEDT"})
 public class Admin extends HttpServlet {
+
     @EJB
     private FormationEnseignementFacadeLocal formationEnseignementFacade;
     @EJB
@@ -55,7 +55,6 @@ public class Admin extends HttpServlet {
     @EJB
     private PersonneFacadeLocal personneFacade;
 
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -69,88 +68,129 @@ public class Admin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-             out.println("<html>");
+            out.println("<html>");
             out.println("<head>");
-            out.println("<title>Administration Emploi du temps</title>");  
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS\\style.css\">");
+            out.println("<title>Administration Emploi du temps</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Truc</h1>");
-            
+            out.println("<h1>Administration de l'emploi du temps</h1>");
+
             out.println("<a  href=\"./ClientEDT\" >Client</a>");
-                      out.println("<br/> Liste des personne<br/>");
-               List lPersonne = personneFacade.findAll();
+            out.println("<h2> Liste des personnes</h2>");
+            out.println("<p>");
+
+            List lPersonne = personneFacade.findAll();
             for (Iterator it = lPersonne.iterator(); it.hasNext();) {
                 Personne elem = (Personne) it.next();
-                out.println( "Personne : <b>" + elem.getIdPersonne() + " </b> ");
-                out.println("Nom et prenom : " + elem.getNom() + " "+ elem.getPrenom()+ "<br/>");
-                
+                out.println("Personne : <b>" + elem.getIdPersonne() + " </b> ");
+                out.println("Nom et prenom : " + elem.getNom() + " " + elem.getPrenom() + "<br/>");
+
             }
-            out.println("<br/> Liste des enseignant<br/>");
+            out.println("</p>");
+
+            //Liste des enseignants
+            out.println("<h2> Liste des enseignants</h2>");
             List lEnseignant = enseignantFacade.findAll();
+            out.println("<p>");
             for (Iterator it = lEnseignant.iterator(); it.hasNext();) {
                 Enseignant elem = (Enseignant) it.next();
                 out.println("Enseignant : <b>" + elem.getIdPersonne().getNom() + " </b> ");
-                out.println("Id : " + elem.getIdEnseignant()+ "<br/>");
-                 out.println("Liste d'enseignement<br/>");
+                out.println("Id : " + elem.getIdEnseignant() + "<br/>");
+                out.println("Liste d'enseignement<br/>");
                 for (Iterator itz = elem.getEnseignementCollection().iterator(); itz.hasNext();) {
-                        Enseignement en = (Enseignement) itz.next();
-                        out.println("-Nom : <b>" + en.getNom() + " </b> ");
+                    Enseignement en = (Enseignement) itz.next();
+                    out.println("Nom : <b>" + en.getNom() + " </b> ");
                 }
-                
-            } 
-            out.println("<br/> Liste des etudiant<br/>");
+
+            }
+            out.println("<p>");
+
+            //Liste des étudiants
+            out.println("<h2> Liste des etudiants</h2>");
+            out.println("<p>");
             List lEtudiant = etudiantFacade.findAll();
             for (Iterator it = lEtudiant.iterator(); it.hasNext();) {
                 Etudiant elem = (Etudiant) it.next();
                 out.println("Etudiant : <b>" + elem.getIdPersonne().getNom() + " </b> ");
-                out.println("Formation : " + elem.getIdFormation().getNom()+ "<br/>");
-                
-            } 
-                      
-            out.println("<br/> Liste des enseignement<br/>");
+                out.println("Formation : " + elem.getIdFormation().getNom() + "<br/>");
+
+            }
+            out.println("</p>");
+
+            //Liste des enseignements          
+            out.println("<h2> Liste des enseignements</h2>");
+            out.println("<p>");
             List lEnseignement = enseignementFacade.findAll();
             for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
                 Enseignement elem = (Enseignement) it.next();
                 out.println("Enseignement : <b>" + elem.getNom() + " </b> ");
-                out.println("Id : " + elem.getIdEnseignement()+
-                        "Enseignant responsable"+ elem.getIdEnseignant().getIdPersonne().getNom()+ "<br/>");               
-            }      
-            out.println("<br/> Liste des cours<br/>");          
+                out.println("Id : " + elem.getIdEnseignement()
+                        + "Enseignant responsable" + elem.getIdEnseignant().getIdPersonne().getNom() + "<br/>");
+            }
+            out.println("</p>");
+
+            //Liste des cours
+            out.println("<h2> Liste des cours</h2>");
+            out.println("<p>");
             List lCours = coursFacade.findAll();
             for (Iterator it = lCours.iterator(); it.hasNext();) {
                 Cours elem = (Cours) it.next();
                 out.println("Cours : <b>" + elem.getNom() + " </b> ");
-                out.println("Id : " + elem.getIdEnseignement().getNom()+ "<br/>");    
+                out.println("Id : " + elem.getIdEnseignement().getNom() + "<br/>");
             }
-            out.println("<br/> Liste de formation<br/>");
+            out.println("</p>");
+
+            //Liste des formations
+            out.println("<h2> Liste de formation</h2>");
+            out.println("<p>");
             List lFormation = formationFacade.findAll();
             for (Iterator it = lFormation.iterator(); it.hasNext();) {
                 Formation elem = (Formation) it.next();
                 out.println("Formation : <b>" + elem.getNom() + " </b> ");
                 out.println("Id : " + elem.getIdFormation());
                 out.println("Nb n'enseignement : " + elem.getEnseignementCollection().size());
-                out.println(" Effectif" +   elem.getEtudiantCollection().size() +"<br/>");
-                out.println("List d'élèves<br/>");
+                out.println(" Effectif" + elem.getEtudiantCollection().size() + "<br/>");
+                out.println("Liste d'élèves<br/>");
                 for (Iterator itz = elem.getEtudiantCollection().iterator(); itz.hasNext();) {
-                        Etudiant el = (Etudiant) itz.next();
-                        out.println("-Nom : <b>" + el.getIdPersonne().getNom() + " </b> ");
-                    }
-                out.println("<br/>Liste d'enseignement<br/>");
-                for (Iterator itz = elem.getEnseignementCollection().iterator(); itz.hasNext();) {
-                        Enseignement en = (Enseignement) itz.next();
-                        out.println("-Nom : <b>" + en.getNom() + " </b> ");
+                    Etudiant el = (Etudiant) itz.next();
+                    out.println("Nom : <b>" + el.getIdPersonne().getNom() + " </b> ");
                 }
-            }      
-            
-            String type=null;
-            type=request.getParameter("type");
-            if (type!=null) {
+                out.println("<h2>Liste d'enseignement</h2>");
+                for (Iterator itz = elem.getEnseignementCollection().iterator(); itz.hasNext();) {
+                    Enseignement en = (Enseignement) itz.next();
+                    out.println("Nom : <b>" + en.getNom() + " </b> ");
+                }
+            }
+            out.println("</p>");
+
+            //ajout d'une entite
+            out.println("<h2>Ajout d'une entite</h2>");
+            out.println("Selectionner l'entité a ajouter :");
+            out.println("<FORM>");
+            out.println("<SELECT name=\"entite\" size=\"1\">");
+            out.println("<OPTION>Etudiant");
+            out.println("<OPTION>Professeur");
+            out.println("<OPTION>Cours");
+            out.println("<OPTION>Formation");
+            out.println("<OPTION>Enseignement");
+            out.println("</SELECT>");
+            out.println("<input type='Submit'><br/>");
+            out.println("</FORM>");
+            String entite = null;
+
+            entite = request.getParameter("entite");
+            System.out.println("Entite :" + entite);
+
+            String type = null;
+            type = request.getParameter("type");
+            if (type != null) {
                 try {
-                    int prix=0;
-                    prix=new Integer(request.getParameter("prix"));
-                    int quantite=new Integer(request.getParameter("quantite"));             
+                    int prix = 0;
+                    prix = new Integer(request.getParameter("prix"));
+                    int quantite = new Integer(request.getParameter("quantite"));
                     out.println("On ajoute un type de pizza<br/>");
-/*
+                    /*
                     long etu = 1;
                     long ettt =45;
                     Personne p = personneFacade.find(etu);
@@ -177,37 +217,103 @@ public class Admin extends HttpServlet {
                     //etudiantFacade.edit(e);
                     //etudiantFacade.edit(p, formationFacade.find(l));
                     //personneFacade.create("k", "y", 4, 5, "ooooo");*/
-                    
+
                     response.sendRedirect("AdminEDT");
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-            out.println("Pizza sauvegardÃ©");
+                out.println("Pizza sauvegardÃ©");
             } else {
-                out.println("<form method='POST'>");
-                out.println("Type: <input type='text' name='type'><br/>");
-                out.println("Prix: <input type='text' name='prix'><br/>");
-                out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
-                out.println("<input type='submit'><br/>");
-                out.println("</form>");
-            out.println("<select name='pays' id='enseignement'>"); 
-            for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
-                Enseignement elem = (Enseignement) it.next();
-                out.println("<option value='" + elem.getIdEnseignement()+"'>"+ elem.getNom()+ "</option>");               
-            }      
-            
-            out.println("</select>");
+                switch (entite) {
+                    case "Etudiant":
+                        //Remplir les champs relatifs a chaque classe
+                        out.println("<form method='POST'>");
+                        out.println("Type: <input type='text' name='type'><br/>");
+                        out.println("Prix: <input type='text' name='prix'><br/>");
+                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("<input type='submit'><br/>");
+                        out.println("</form>");
+                        out.println("<select name='pays' id='enseignement'>");
+                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                            Enseignement elem = (Enseignement) it.next();
+                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
+                        }
+
+                        out.println("</select>");
+                        break;
+                    case "Professeur":
+                        out.println("<form method='POST'>");
+                        out.println("Type: <input type='text' name='type'><br/>");
+                        out.println("Prix: <input type='text' name='prix'><br/>");
+                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("<input type='submit'><br/>");
+                        out.println("</form>");
+                        out.println("<select name='pays' id='enseignement'>");
+                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                            Enseignement elem = (Enseignement) it.next();
+                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
+                        }
+
+                        out.println("</select>");
+                        break;
+                    case "Cours":
+                        out.println("<form method='POST'>");
+                        out.println("Type: <input type='text' name='type'><br/>");
+                        out.println("Prix: <input type='text' name='prix'><br/>");
+                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("<input type='submit'><br/>");
+                        out.println("</form>");
+                        out.println("<select name='pays' id='enseignement'>");
+                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                            Enseignement elem = (Enseignement) it.next();
+                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
+                        }
+
+                        out.println("</select>");
+                        break;
+                    case "Formation":
+                        out.println("<form method='POST'>");
+                        out.println("Type: <input type='text' name='type'><br/>");
+                        out.println("Prix: <input type='text' name='prix'><br/>");
+                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("<input type='submit'><br/>");
+                        out.println("</form>");
+                        out.println("<select name='pays' id='enseignement'>");
+                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                            Enseignement elem = (Enseignement) it.next();
+                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
+                        }
+
+                        out.println("</select>");
+                        break;
+                    case "Enseignement":
+                        out.println("<form method='POST'>");
+                        out.println("Type: <input type='text' name='type'><br/>");
+                        out.println("Prix: <input type='text' name='prix'><br/>");
+                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("<input type='submit'><br/>");
+                        out.println("</form>");
+                        out.println("<select name='pays' id='enseignement'>");
+                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
+                            Enseignement elem = (Enseignement) it.next();
+                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
+                        }
+
+                        out.println("</select>");
+                        break;
+                    default:
+                        break;
+                }
+
             }
             out.println("</body>");
             out.println("</html>");
-            
 
-            
-            
         }
-                                   
+
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
