@@ -65,6 +65,9 @@ public class Enseignement implements Serializable {
         @JoinColumn(name = "idFormation", referencedColumnName = "idFormation")})
     @ManyToMany
     private Collection<Formation> formationCollection;
+    @JoinColumn(name = "idCours", referencedColumnName = "idCours")
+    @ManyToOne
+    private Cours idCours;
     @JoinColumn(name = "idEnseignant", referencedColumnName = "idEnseignant")
     @ManyToOne(optional = false)
     private Enseignant idEnseignant;
@@ -124,6 +127,14 @@ public class Enseignement implements Serializable {
 
     public void setFormationCollection(Collection<Formation> formationCollection) {
         this.formationCollection = formationCollection;
+    }
+
+    public Cours getIdCours() {
+        return idCours;
+    }
+
+    public void setIdCours(Cours idCours) {
+        this.idCours = idCours;
     }
 
     public Enseignant getIdEnseignant() {

@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,12 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -52,13 +55,15 @@ public class Cours implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "heureDebut")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date heureDebut;
     @Basic(optional = false)
     @NotNull
     @Column(name = "heureFin")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date heureFin;
+    @OneToMany(mappedBy = "idCours")
+    private Collection<Enseignement> enseignementCollection;
     @JoinColumn(name = "idEnseignement", referencedColumnName = "idEnseignement")
     @ManyToOne(optional = false)
     private Enseignement idEnseignement;
@@ -107,6 +112,15 @@ public class Cours implements Serializable {
 
     public void setHeureFin(Date heureFin) {
         this.heureFin = heureFin;
+    }
+
+    @XmlTransient
+    public Collection<Enseignement> getEnseignementCollection() {
+        return enseignementCollection;
+    }
+
+    public void setEnseignementCollection(Collection<Enseignement> enseignementCollection) {
+        this.enseignementCollection = enseignementCollection;
     }
 
     public Enseignement getIdEnseignement() {

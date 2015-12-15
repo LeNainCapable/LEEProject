@@ -38,7 +38,7 @@ public class EnseignantFacade extends AbstractFacade<Enseignant> implements Ense
     }
     
     public Enseignant create(String nom, String prenom,int age, int login, String password){
-        Personne p = new Personne(null,nom,prenom,age,login,password);
+        Personne p = new Personne(null,nom,prenom,age,login,password,false);
         return create(p);
     }
 }

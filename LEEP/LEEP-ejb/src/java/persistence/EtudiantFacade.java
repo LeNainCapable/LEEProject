@@ -40,7 +40,7 @@ public class EtudiantFacade extends AbstractFacade<Etudiant> implements Etudiant
     }
     
     public void create(String nom, String prenom,int age, int login, String password, Formation formation){
-        Personne p = new Personne(null,nom,prenom,age,login,password);
+        Personne p = new Personne(null,nom,prenom,age,login,password,false);
         create(p, formation);
     }
     

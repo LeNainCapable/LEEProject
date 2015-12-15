@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Personne.findByPrenom", query = "SELECT p FROM Personne p WHERE p.prenom = :prenom"),
     @NamedQuery(name = "Personne.findByAge", query = "SELECT p FROM Personne p WHERE p.age = :age"),
     @NamedQuery(name = "Personne.findByLogin", query = "SELECT p FROM Personne p WHERE p.login = :login"),
-    @NamedQuery(name = "Personne.findByPassword", query = "SELECT p FROM Personne p WHERE p.password = :password")})
+    @NamedQuery(name = "Personne.findByPassword", query = "SELECT p FROM Personne p WHERE p.password = :password"),
+    @NamedQuery(name = "Personne.findByResponsable", query = "SELECT p FROM Personne p WHERE p.responsable = :responsable")})
 public class Personne implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,6 +67,10 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "password")
     private String password;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "responsable")
+    private boolean responsable;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPersonne")
     private Enseignant enseignant;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idPersonne")
@@ -78,13 +83,14 @@ public class Personne implements Serializable {
         this.idPersonne = idPersonne;
     }
 
-    public Personne(Long idPersonne, String nom, String prenom, int age, int login, String password) {
+    public Personne(Long idPersonne, String nom, String prenom, int age, int login, String password, boolean responsable) {
         this.idPersonne = idPersonne;
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
         this.login = login;
         this.password = password;
+        this.responsable = responsable;
     }
 
     public Long getIdPersonne() {
@@ -133,6 +139,14 @@ public class Personne implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(boolean responsable) {
+        this.responsable = responsable;
     }
 
     public Enseignant getEnseignant() {

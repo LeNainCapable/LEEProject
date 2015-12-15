@@ -137,7 +137,8 @@ public class Admin extends HttpServlet {
             for (Iterator it = lCours.iterator(); it.hasNext();) {
                 Cours elem = (Cours) it.next();
                 out.println("Cours : <b>" + elem.getNom() + " </b> ");
-                out.println("Id : " + elem.getIdEnseignement().getNom() + "<br/>");
+                out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() +"<br/>");
+                out.println("Heure debut:"+elem.getHeureDebut() +" Heure de fin:" + elem.getHeureFin()+"<br/>" );
             }
             out.println("</p>");
 
