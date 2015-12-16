@@ -23,9 +23,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import entity.Personne;
+import exception.HorairePrisException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import persistence.CoursFacadeLocal;
 import persistence.EnseignantFacadeLocal;
 import persistence.EnseignementFacadeLocal;
@@ -68,6 +71,15 @@ public class Admin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
+            Cours cc = coursFacade.find(3L);           
+            try {
+                coursFacade.addHoraire(cc, 2015, 12, 16, 12, 0, 20);
+            } catch (HorairePrisException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
             out.println("<html>");
             out.println("<head>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS\\style.css\">");

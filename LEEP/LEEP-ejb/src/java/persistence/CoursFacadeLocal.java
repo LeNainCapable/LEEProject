@@ -6,6 +6,7 @@
 package persistence;
 
 import entity.Cours;
+import exception.HorairePrisException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,9 @@ public interface CoursFacadeLocal {
     List<Cours> findRange(int[] range);
 
     int count();
+
+    void addHoraire(Cours cours, int y, int m, int d, int h, int mn, int duree) throws HorairePrisException;
+
+    
     
 }
