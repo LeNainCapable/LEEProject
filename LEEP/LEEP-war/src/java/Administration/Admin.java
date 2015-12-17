@@ -37,8 +37,8 @@ import persistence.FormationEnseignementFacadeLocal;
 import persistence.FormationFacadeLocal;
 
 /**
- *
- * @author 11000505
+ * 
+ * @author leep
  */
 @WebServlet(name = "AdminEDT", urlPatterns = {"/AdminEDT"})
 public class Admin extends HttpServlet {
