@@ -71,15 +71,14 @@ public class Admin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            Cours cc = coursFacade.find(3L);           
+
+            Cours cc = coursFacade.find(3L);
             try {
                 coursFacade.addHoraire(cc, 2015, 12, 16, 12, 0, 20);
             } catch (HorairePrisException ex) {
                 Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
             out.println("<html>");
             out.println("<head>");
             out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS\\style.css\">");
@@ -149,8 +148,8 @@ public class Admin extends HttpServlet {
             for (Iterator it = lCours.iterator(); it.hasNext();) {
                 Cours elem = (Cours) it.next();
                 out.println("Cours : <b>" + elem.getNom() + " </b> ");
-                out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() +"<br/>");
-                out.println("Heure debut:"+elem.getHeureDebut() +" Heure de fin:" + elem.getHeureFin()+"<br/>" );
+                out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() + "<br/>");
+                out.println("Heure debut:" + elem.getHeureDebut() + " Heure de fin:" + elem.getHeureFin() + "<br/>");
             }
             out.println("</p>");
 
@@ -183,7 +182,7 @@ public class Admin extends HttpServlet {
             out.println("<FORM>");
             out.println("<SELECT name=\"entite\" size=\"1\">");
             out.println("<OPTION>Etudiant");
-            out.println("<OPTION>Professeur");
+            out.println("<OPTION>Enseignant");
             out.println("<OPTION>Cours");
             out.println("<OPTION>Formation");
             out.println("<OPTION>Enseignement");
@@ -196,13 +195,40 @@ public class Admin extends HttpServlet {
             System.out.println("Entite :" + entite);
 
             String type = null;
-            type = request.getParameter("type");
+            type = request.getParameter("nom");
             if (type != null) {
                 try {
-                    int prix = 0;
-                    prix = new Integer(request.getParameter("prix"));
-                    int quantite = new Integer(request.getParameter("quantite"));
-                    out.println("On ajoute un type de pizza<br/>");
+                    out.println("On ajoute un type d'entité<br/>");
+
+                    switch (entite) {
+                        case "Etudiant":
+                          //on ajoute un étu, mettre la méthode a chaque fois d'ajout avec les param
+                            String nom = request.getParameter("nom");
+                            String prenom = request.getParameter("prenom");
+                            String age = request.getParameter("age");
+                            String login = request.getParameter("login");
+                            String pw = request.getParameter("pw");
+                            System.out.println("Nom :" + nom);
+                            System.out.println("Prenom :" + prenom);
+                            System.out.println("Age :" + age);
+                            System.out.println("Login :" + login);
+                            
+                            break;
+                        case "Enseignant":
+                           
+                            break;
+                        case "Cours":
+                           
+                            break;
+                        case "Formation":
+                           
+                            break;
+                        case "Enseignement":
+                           
+                            break;
+                        default:
+                            break;
+                    }
                     /*
                     long etu = 1;
                     long ettt =45;
@@ -236,15 +262,18 @@ public class Admin extends HttpServlet {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                out.println("Pizza sauvegardÃ©");
+                out.println("Entité sauvegardée");
             } else {
                 switch (entite) {
                     case "Etudiant":
                         //Remplir les champs relatifs a chaque classe
                         out.println("<form method='POST'>");
-                        out.println("Type: <input type='text' name='type'><br/>");
-                        out.println("Prix: <input type='text' name='prix'><br/>");
-                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("Nom: <input type='text' name='nom'><br/>");
+                        out.println("Prenom: <input type='text' name='prenom'><br/>");
+                        out.println("Age: <input type='text' name='age'><br/>");
+                        out.println("Login: <input type='text' name='login'><br/>");
+                        out.println("Password: <input type='text' name='password'><br/>");
+                        out.println("Formation: <input type='text' name='formation'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
@@ -255,14 +284,17 @@ public class Admin extends HttpServlet {
 
                         out.println("</select>");
                         break;
-                    case "Professeur":
+                    case "Enseignant":
                         out.println("<form method='POST'>");
-                        out.println("Type: <input type='text' name='type'><br/>");
-                        out.println("Prix: <input type='text' name='prix'><br/>");
-                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("Nom: <input type='text' name='nom'><br/>");
+                        out.println("Prenom: <input type='text' name='prenom'><br/>");
+                        out.println("Age: <input type='text' name='age'><br/>");
+                        out.println("Login: <input type='text' name='login'><br/>");
+                        out.println("Password: <input type='text' name='password'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
+
                         for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
                             Enseignement elem = (Enseignement) it.next();
                             out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
@@ -272,9 +304,10 @@ public class Admin extends HttpServlet {
                         break;
                     case "Cours":
                         out.println("<form method='POST'>");
-                        out.println("Type: <input type='text' name='type'><br/>");
-                        out.println("Prix: <input type='text' name='prix'><br/>");
-                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("idEnseignement: <input type='text' name='idenseignement'><br/>");
+                        out.println("Nom: <input type='text' name='nom'><br/>");
+                        out.println("Heure début: <input type='text' name='heured'><br/>");
+                        out.println("Heure fin: <input type='text' name='heuref'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
@@ -287,9 +320,7 @@ public class Admin extends HttpServlet {
                         break;
                     case "Formation":
                         out.println("<form method='POST'>");
-                        out.println("Type: <input type='text' name='type'><br/>");
-                        out.println("Prix: <input type='text' name='prix'><br/>");
-                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("Nom: <input type='text' name='nom'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
@@ -302,9 +333,11 @@ public class Admin extends HttpServlet {
                         break;
                     case "Enseignement":
                         out.println("<form method='POST'>");
-                        out.println("Type: <input type='text' name='type'><br/>");
-                        out.println("Prix: <input type='text' name='prix'><br/>");
-                        out.println("QuantitÃ©: <input type='text' name='quantite'><br/>");
+                        out.println("Nom: <input type='text' name='nom'><br/>");
+                        out.println("idEnseignant: <input type='text' name='prix'><br/>");
+                        out.println("nbTD: <input type='text' name='nbtd'><br/>");
+                        out.println("nbSem: <input type='text' name='nbsem'><br/>");
+                        out.println("idCours: <input type='text' name='idcours'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
