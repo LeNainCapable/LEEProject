@@ -193,6 +193,18 @@ public class Admin extends HttpServlet {
 
             entite = request.getParameter("entite");
             System.out.println("Entite :" + entite);
+            String nom;
+            String prenom;
+            String age;
+            String login;
+            String pw;
+            String formation;
+            String heureD, heureF;
+            String idEnseignant;
+            String idEnseignement;
+            String nbCours;
+            String nbTD;
+            String nbSem;
 
             String type = null;
             type = request.getParameter("nom");
@@ -202,29 +214,42 @@ public class Admin extends HttpServlet {
 
                     switch (entite) {
                         case "Etudiant":
-                          //on ajoute un étu, mettre la méthode a chaque fois d'ajout avec les param
-                            String nom = request.getParameter("nom");
-                            String prenom = request.getParameter("prenom");
-                            String age = request.getParameter("age");
-                            String login = request.getParameter("login");
-                            String pw = request.getParameter("pw");
+                            //on ajoute un étu, mettre la méthode a chaque fois d'ajout avec les param
+                            nom = request.getParameter("nom");
+                            prenom = request.getParameter("prenom");
+                            age = request.getParameter("age");
+                            login = request.getParameter("login");
+                            pw = request.getParameter("pw");
+                            formation = request.getParameter("formation");
                             System.out.println("Nom :" + nom);
                             System.out.println("Prenom :" + prenom);
                             System.out.println("Age :" + age);
                             System.out.println("Login :" + login);
-                            
+
                             break;
                         case "Enseignant":
-                           
+                            nom = request.getParameter("nom");
+                            prenom = request.getParameter("prenom");
+                            age = request.getParameter("age");
+                            login = request.getParameter("login");
+                            pw = request.getParameter("pw");
                             break;
                         case "Cours":
-                           
+                            idEnseignement = request.getParameter("idEnseignement");
+                            nom = request.getParameter("nom");
+                            heureD = request.getParameter("heureD");
+                            heureF = request.getParameter("heureF");
                             break;
                         case "Formation":
-                           
+                            nom = request.getParameter("nom");
+                            
                             break;
                         case "Enseignement":
-                           
+                            nom = request.getParameter("nom");
+                            idEnseignant = request.getParameter("idEnseignant");
+                            nbTD = request.getParameter("nbTD");
+                            nbSem = request.getParameter("nbSem");
+                            nbCours = request.getParameter("nbCours");
                             break;
                         default:
                             break;
@@ -304,10 +329,10 @@ public class Admin extends HttpServlet {
                         break;
                     case "Cours":
                         out.println("<form method='POST'>");
-                        out.println("idEnseignement: <input type='text' name='idenseignement'><br/>");
+                        out.println("idEnseignement: <input type='text' name='idEnseignement'><br/>");
                         out.println("Nom: <input type='text' name='nom'><br/>");
-                        out.println("Heure début: <input type='text' name='heured'><br/>");
-                        out.println("Heure fin: <input type='text' name='heuref'><br/>");
+                        out.println("Heure début: <input type='text' name='heureD'><br/>");
+                        out.println("Heure fin: <input type='text' name='heureF'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
@@ -334,10 +359,10 @@ public class Admin extends HttpServlet {
                     case "Enseignement":
                         out.println("<form method='POST'>");
                         out.println("Nom: <input type='text' name='nom'><br/>");
-                        out.println("idEnseignant: <input type='text' name='prix'><br/>");
-                        out.println("nbTD: <input type='text' name='nbtd'><br/>");
-                        out.println("nbSem: <input type='text' name='nbsem'><br/>");
-                        out.println("idCours: <input type='text' name='idcours'><br/>");
+                        out.println("idEnseignant: <input type='text' name='idEnseignant'><br/>");
+                        out.println("nbTD: <input type='text' name='nbTD'><br/>");
+                        out.println("nbSem: <input type='text' name='nbSem'><br/>");
+                        out.println("idCours: <input type='text' name='idCours'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");
