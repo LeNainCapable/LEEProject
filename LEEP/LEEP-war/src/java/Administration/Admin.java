@@ -226,7 +226,9 @@ public class Admin extends HttpServlet {
                             System.out.println("Prenom :" + prenom);
                             System.out.println("Age :" + age);
                             System.out.println("Login :" + login);
-
+                            Formation f = formationFacade.find(Long.valueOf(formation));
+                            System.out.println("Formation ::" + f.getNom());
+                            //etudiantFacade.create(nom, prenom, Integer.valueOf(age), Integer.valueOf(login), pw, f);
                             break;
                         case "Enseignant":
                             nom = request.getParameter("nom");
@@ -234,18 +236,23 @@ public class Admin extends HttpServlet {
                             age = request.getParameter("age");
                             login = request.getParameter("login");
                             pw = request.getParameter("pw");
+                            //enseignantFacade.create(nom, prenom, Integer.valueOf(age), Integer.valueOf(login), pw);
                             break;
                         case "Cours":
                             idEnseignement = request.getParameter("idEnseignement");
                             nom = request.getParameter("nom");
                             heureD = request.getParameter("heureD");
                             heureF = request.getParameter("heureF");
+                            //Date dd = new 
+                            //faut convertir les heures ptin
+                            //Cours c = new Cours()
+                            
                             break;
                         case "Formation":
                             nom = request.getParameter("nom");
-                            System.out.println("Nom Formation :"+ nom);
-                            FormationFacade f = new FormationFacade();
-                            //f.create(nom);
+                            System.out.println("Nom Formation :" + nom);
+                            formationFacade.create(nom);
+
                             break;
                         case "Enseignement":
                             nom = request.getParameter("nom");
@@ -253,6 +260,11 @@ public class Admin extends HttpServlet {
                             nbTD = request.getParameter("nbTD");
                             nbSem = request.getParameter("nbSem");
                             nbCours = request.getParameter("nbCours");
+                            
+                            Enseignant en = enseignantFacade.find(Long.valueOf(idEnseignant));
+                            enseignementFacade.create(nom, Integer.valueOf(nbSem), en);
+                            //en.setCoursCollection(new ArrayList());
+                            //en.getCoursCollection().add(coursFacade.find(l));
                             break;
                         default:
                             break;
@@ -351,13 +363,7 @@ public class Admin extends HttpServlet {
                         out.println("Nom: <input type='text' name='nom'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
-                        out.println("<select name='pays' id='enseignement'>");
-                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
-                            Enseignement elem = (Enseignement) it.next();
-                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
-                        }
 
-                        out.println("</select>");
                         break;
                     case "Enseignement":
                         out.println("<form method='POST'>");
@@ -368,13 +374,7 @@ public class Admin extends HttpServlet {
                         out.println("idCours: <input type='text' name='idCours'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
-                        out.println("<select name='pays' id='enseignement'>");
-                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
-                            Enseignement elem = (Enseignement) it.next();
-                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
-                        }
 
-                        out.println("</select>");
                         break;
                     default:
                         break;
