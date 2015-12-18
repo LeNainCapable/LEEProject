@@ -72,8 +72,8 @@ public class Client extends HttpServlet {
             //Liste des cours
             String entite = null;
             String id = null;
-            out.println("<h2>Ajout d'une entite</h2>");
-            out.println("Selectionner l'entité a ajouter :");
+            out.println("<h2>Consulter un emploi du temps</h2>");
+            out.println("Se logger en tant que :");
             out.println("<FORM>");
             out.println("<SELECT name=\"entite\" size=\"1\">");
             out.println("<OPTION>Etudiant");

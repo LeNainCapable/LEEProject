@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : Dec 15, 2008, 4:03:55 AM
-    Author     : eswar@vaannila.com
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -12,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login LEEP</title>
     </head>
     <body>
         <div style="color:red">
@@ -24,4 +18,5 @@
             <html:submit value="Login" />
         </html:form>
     </body>
+    <a href="/LEEP-war/ClientEDT">Voir un emploi du temps</a>
 </html>

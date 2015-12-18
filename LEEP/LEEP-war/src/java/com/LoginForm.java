@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionMessage;
 
 /**
  *
- * @author eswar@vaannila.com
+ * @author LEEP
  */
 public class LoginForm extends org.apache.struts.action.ActionForm {
     

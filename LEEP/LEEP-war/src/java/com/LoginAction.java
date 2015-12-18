@@ -4,7 +4,12 @@
  */
 package com;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,9 +26,11 @@ import persistence.PersonneFacadeLocal;
 
 /**
  *
- * @author eswar@vaannila.com
+ * @author LEEP
  */
 public class LoginAction extends org.apache.struts.action.Action {
+
+    PersonneFacadeLocal personneFacade1 = lookupPersonneFacadeLocal();
 
     @EJB
     private FormationEnseignementFacadeLocal formationEnseignementFacade;
@@ -60,12 +67,24 @@ public class LoginAction extends org.apache.struts.action.Action {
         
         System.out.println(loginForm.getUserName());
         long l = 1;
-        System.out.println(personneFacade.find(1));
-        //if (personneFacade.find(loginForm.getUserName()).getPassword().equals(loginForm.getPassword())) {
-        if(loginForm.getUserName().equals(loginForm.getPassword())){
+        PersonneFacadeLocal PFL = this.lookupPersonneFacadeLocal();
+        
+        System.out.println(PFL.find(l).getNom());
+        if (PFL.find(Long.valueOf(loginForm.getUserName()).longValue()).getPassword().equals(loginForm.getPassword()) && PFL.find(Long.valueOf(loginForm.getUserName()).longValue()).getResponsable()) {
+        //if(loginForm.getUserName().equals(loginForm.getPassword())){
             return mapping.findForward(SUCCESS);
         } else {
             return mapping.findForward(FAILURE);
+        }
+    }
+
+    private PersonneFacadeLocal lookupPersonneFacadeLocal() {
+        try {
+            Context c = new InitialContext();
+            return (PersonneFacadeLocal) c.lookup("java:global/LEEP/LEEP-ejb/PersonneFacade!persistence.PersonneFacadeLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
         }
     }
 }

@@ -91,7 +91,7 @@ public class Admin extends HttpServlet {
             out.println("<a  href=\"./ClientEDT\" >Client</a>");
             out.println("<h2> Liste des personnes</h2>");
             out.println("<p>");
-
+            
             List lPersonne = personneFacade.findAll();
             for (Iterator it = lPersonne.iterator(); it.hasNext();) {
                 Personne elem = (Personne) it.next();
@@ -324,13 +324,14 @@ public class Admin extends HttpServlet {
                         out.println("Formation: <input type='text' name='formation'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
-                        out.println("<select name='pays' id='enseignement'>");
+                        /*out.println("<select name='pays' id='enseignement'>");
                         for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
                             Enseignement elem = (Enseignement) it.next();
                             out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
                         }
 
                         out.println("</select>");
+                        */
                         break;
                     case "Enseignant":
                         out.println("<form method='POST'>");
@@ -341,14 +342,7 @@ public class Admin extends HttpServlet {
                         out.println("Password: <input type='text' name='password'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
-                        out.println("<select name='pays' id='enseignement'>");
-
-                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
-                            Enseignement elem = (Enseignement) it.next();
-                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
-                        }
-
-                        out.println("</select>");
+                        
                         break;
                     case "Cours":
                         out.println("<form method='POST'>");
@@ -362,13 +356,7 @@ public class Admin extends HttpServlet {
                         out.println("duree (min) : <input type='text' name='duree'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
-                        out.println("<select name='pays' id='enseignement'>");
-                        for (Iterator it = lEnseignement.iterator(); it.hasNext();) {
-                            Enseignement elem = (Enseignement) it.next();
-                            out.println("<option value='" + elem.getIdEnseignement() + "'>" + elem.getNom() + "</option>");
-                        }
-
-                        out.println("</select>");
+                        
                         break;
                     case "Formation":
                         out.println("<form method='POST'>");
