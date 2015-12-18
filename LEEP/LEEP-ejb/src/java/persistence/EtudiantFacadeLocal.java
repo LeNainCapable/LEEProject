@@ -32,5 +32,6 @@ public interface EtudiantFacadeLocal {
 
     int count();
     void create(Personne personne, Formation formation);
+    Etudiant create(String nom, String prenom,int age, int login, String password, Formation formation);
     
 }

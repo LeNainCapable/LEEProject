@@ -29,17 +29,4 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
         super(Personne.class);
     }
     
-    public void create(String nom, String prenom,int age, int login, String password) {
-        String s = "insert into personne(idPersonne,nom,prenom,age,login,password) values (NULL,?,?,?,?,?)";
-     //   INSERT INTO `leep`.`personne` (`idPersonne`, `nom`, `prenom`, `age`, `login`, `password`) VALUES (NULL, 'kai', 'fay', '14', '1', 'fefesfsef');
-        Query q1 = em.createNativeQuery(s);
-        q1.setParameter(1, prenom);
-        q1.setParameter(2, nom);
-        q1.setParameter(3, age);
-        q1.setParameter(4, login);
-        q1.setParameter(5,password)  ;      
-        q1.executeUpdate();     
-        //em.refresh(ss);
-    }
-    
 }

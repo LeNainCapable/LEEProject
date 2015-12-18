@@ -5,6 +5,7 @@
  */
 package persistence;
 
+import entity.Enseignement;
 import entity.Formation;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,6 +31,8 @@ public interface FormationFacadeLocal {
 
     int count();
     
-    void create(String Nom);
+    Formation create(String Nom);
+
+    void addEnseignement(Formation formation, Enseignement enseignement);
     
 }

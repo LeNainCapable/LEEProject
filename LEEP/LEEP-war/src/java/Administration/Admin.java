@@ -34,6 +34,7 @@ import persistence.EnseignantFacadeLocal;
 import persistence.EnseignementFacadeLocal;
 import persistence.EtudiantFacadeLocal;
 import persistence.FormationEnseignementFacadeLocal;
+import persistence.FormationFacade;
 import persistence.FormationFacadeLocal;
 
 /**
@@ -242,7 +243,9 @@ public class Admin extends HttpServlet {
                             break;
                         case "Formation":
                             nom = request.getParameter("nom");
-                            
+                            System.out.println("Nom Formation :"+ nom);
+                            FormationFacade f = new FormationFacade();
+                            //f.create(nom);
                             break;
                         case "Enseignement":
                             nom = request.getParameter("nom");

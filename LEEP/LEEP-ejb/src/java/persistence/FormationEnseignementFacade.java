@@ -20,6 +20,8 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class FormationEnseignementFacade extends AbstractFacade<FormationEnseignement> implements FormationEnseignementFacadeLocal {
     @EJB
+    private EnseignementFacadeLocal enseignementFacade;
+    @EJB
     private FormationFacadeLocal formationFacade;
     @PersistenceContext(unitName = "LEEP-ejbPU")
     private EntityManager em;
@@ -34,11 +36,13 @@ public class FormationEnseignementFacade extends AbstractFacade<FormationEnseign
     }
     
     public void create(Formation f, Enseignement e){
-        FormationEnseignement fe = new FormationEnseignement(f.getIdFormation(),e.getIdEnseignement());
+        //FormationEnseignement fe = new FormationEnseignement(f.getIdFormation(),e.getIdEnseignement());
         f.getEnseignementCollection().add(e);
+        e.getFormationCollection().add(f);
         formationFacade.edit(f); 
-        fe.setEnseignement(e);
-        fe.setFormation(f);
-        create(fe);
+        enseignementFacade.edit(e);
+        //fe.setEnseignement(e);
+        //fe.setFormation(f);
+        //create(fe);
     }
 }

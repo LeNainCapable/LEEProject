@@ -20,6 +20,10 @@ import javax.persistence.PersistenceContext;
 public class FormationFacade extends AbstractFacade<Formation> implements FormationFacadeLocal {
     @EJB
     private FormationEnseignementFacadeLocal formationEnseignementFacade;
+    @EJB
+    private FormationFacadeLocal formationFacade;
+    @EJB
+    private EnseignementFacadeLocal enseignementFacade;
     @PersistenceContext(unitName = "LEEP-ejbPU")
     private EntityManager em;
 
@@ -32,13 +36,18 @@ public class FormationFacade extends AbstractFacade<Formation> implements Format
         super(Formation.class);
     }
     
-    public void create(String nom){
+    public Formation create(String nom){
         Formation f = new Formation();
         f.setNom(nom);
         create(f);
+        return f;
     }
     public void addEnseignement(Formation formation, Enseignement enseignement){
-        formationEnseignementFacade.create(formation, enseignement);
+        //formationEnseignementFacade.create(formation, enseignement);
+        formation.getEnseignementCollection().add(enseignement);
+        enseignement.getFormationCollection().add(formation);
+        formationFacade.edit(formation); 
+        enseignementFacade.edit(enseignement);
     }
     
 }

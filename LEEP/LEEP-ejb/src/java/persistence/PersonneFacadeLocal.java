@@ -30,6 +30,5 @@ public interface PersonneFacadeLocal {
 
     int count();
     
-    void create(String nom, String prenom,int age, int login, String password);
     
 }

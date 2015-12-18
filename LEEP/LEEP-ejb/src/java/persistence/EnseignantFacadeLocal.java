@@ -31,6 +31,5 @@ public interface EnseignantFacadeLocal {
 
     int count();
     
-    Enseignant create(Personne personne);
     Enseignant create(String nom, String prenom,int age, int login, String password);
 }
