@@ -5,8 +5,8 @@
  */
 package GestionClient;
 
-
 import entity.Cours;
+import entity.Enseignant;
 import entity.Enseignement;
 import entity.Etudiant;
 import entity.Formation;
@@ -20,6 +20,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import persistence.CoursFacadeLocal;
+import persistence.EnseignantFacadeLocal;
+import persistence.EnseignementFacadeLocal;
+import persistence.EtudiantFacadeLocal;
+import persistence.FormationEnseignementFacadeLocal;
+import persistence.FormationFacadeLocal;
+import persistence.PersonneFacadeLocal;
 
 /**
  *
@@ -27,6 +34,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ClientEDT", urlPatterns = {"/ClientEDT"})
 public class Client extends HttpServlet {
+
+    @EJB
+    private FormationEnseignementFacadeLocal formationEnseignementFacade;
+    @EJB
+    private FormationFacadeLocal formationFacade;
+    @EJB
+    private EnseignementFacadeLocal enseignementFacade;
+    @EJB
+    private CoursFacadeLocal coursFacade;
+    @EJB
+    private EtudiantFacadeLocal etudiantFacade;
+    @EJB
+    private EnseignantFacadeLocal enseignantFacade;
+    @EJB
+    private PersonneFacadeLocal personneFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,31 +65,88 @@ public class Client extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Commande Pizza</title>");  
+            out.println("<title>Consulter l'EDT</title>");
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS\\style.css\">");
             out.println("</head>");
             out.println("<body>");
-                        //Liste des cours
-            out.println("<h2> Liste des cours</h2>");
-            out.println("<p>");
-            /*
-            List lCours = coursFacade.findAll();
-            for (Iterator it = lCours.iterator(); it.hasNext();) {
-                Cours elem = (Cours) it.next();
-                Etudiant etu = etudiantFacade.find(1);
+            //Liste des cours
+            String entite = null;
+            String id = null;
+            out.println("<h2>Ajout d'une entite</h2>");
+            out.println("Selectionner l'entité a ajouter :");
+            out.println("<FORM>");
+            out.println("<SELECT name=\"entite\" size=\"1\">");
+            out.println("<OPTION>Etudiant");
+            out.println("<OPTION>Enseignant");
+            out.println("</SELECT>");
+            out.println("<input type='Submit'><br/>");
+            out.println("</FORM>");
 
-                Formation formetu = formationFacade.find(etu.getIdFormation());
-                for (Iterator formiterator = formetu.getEnseignementCollection().iterator(); formiterator.hasNext();) {
-                    Enseignement ensiterator = (Enseignement) formiterator.next();
-                    if (elem.getIdEnseignement() == ensiterator) {
-                        out.println("Cours : <b>" + elem.getNom() + " </b> ");
+            entite = request.getParameter("entite");
+            id = request.getParameter("id");
+            if (entite != null) {
+                out.println("<form method='POST'>");
+                out.println("Id" + entite + ": <input type='text' name='id'><br/>");
+                out.println("<input type='submit'><br/>");
+                out.println("</form>");
+                if (id != null) {
+                    switch (entite) {
+                        case "Etudiant":
+                            out.println("<h2> Liste des cours auxquels vous assistez</h2>");
+                            out.println("<p>");
+
+                            List lCours = coursFacade.findAll();
+                            for (Iterator it = lCours.iterator(); it.hasNext();) {
+                                Cours elem = (Cours) it.next();
+                                long l = Long.valueOf(id).longValue();
+                                Etudiant etu = etudiantFacade.find(l);
+                                System.out.println(etu.getIdPersonne());
+
+                                Formation formetu = formationFacade.find(etu.getIdFormation().getIdFormation());
+                                for (Iterator formiterator = formetu.getEnseignementCollection().iterator(); formiterator.hasNext();) {
+                                    Enseignement ensiterator = (Enseignement) formiterator.next();
+                                    if (elem.getIdEnseignement().getIdEnseignement() == ensiterator.getIdEnseignement()) {
+                                        out.println("Cours : <b>" + elem.getNom() + " </b> ");
+                                        out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() + "<br/>");
+                                        out.println("Heure debut: " + elem.getHeureDebut() + " Heure de fin: " + elem.getHeureFin() + "<br/>");
+                                    }
+
+                                }
+
+                            }
+
+                            out.println("</p>");
+                            break;
+                        case "Enseignant":
+                            out.println("<h2> Liste des cours que vous dispensez</h2>");
+                            
+                            Enseignant ens = enseignantFacade.find(Long.valueOf(id).longValue());
+                            out.println("<p>");
+                            out.println("Enseignant : <b>" + ens.getIdPersonne().getNom() + " </b> ");
+                            out.println("Id : " + ens.getIdEnseignant() + "<br/>");
+                            out.println("Liste d'enseignement<br/>");
+                            
+                            List lCoursens = coursFacade.findAll();
+                            for (Iterator it = lCoursens.iterator(); it.hasNext();) {
+                                Cours elem = (Cours) it.next();
+                            for (Iterator itz = ens.getEnseignementCollection().iterator(); itz.hasNext();) {
+                                Enseignement en = (Enseignement) itz.next();
+                                if (en.getIdEnseignement() == elem.getIdEnseignement().getIdEnseignement()) {
+                                    out.println("Cours : <b>" + elem.getNom() + " </b> ");
+                                    out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() + "<br/>");
+                                    out.println("Heure debut: " + elem.getHeureDebut() + " Heure de fin: " + elem.getHeureFin() + "<br/>");
+                                }
+                            }
+                            }
+                            out.println("<p>");
+                            break;
+
+                        default:
+                            break;
                     }
-                    out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() + "<br/>");
-                    out.println("Heure debut:" + elem.getHeureDebut() + " Heure de fin:" + elem.getHeureFin() + "<br/>");
                 }
-
             }
-            out.println("</p>");
-            */
+
             /*List lStock = stockFacade.findAll();
             for (Iterator it = lStock.iterator(); it.hasNext();) {
                 Stock s = (Stock) it.next();
@@ -124,7 +203,7 @@ public class Client extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
