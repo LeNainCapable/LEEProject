@@ -148,6 +148,7 @@ public class Admin extends HttpServlet {
             List lCours = coursFacade.findAll();
             for (Iterator it = lCours.iterator(); it.hasNext();) {
                 Cours elem = (Cours) it.next();
+                
                 out.println("Cours : <b>" + elem.getNom() + " </b> ");
                 out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() + "<br/>");
                 out.println("Heure debut:" + elem.getHeureDebut() + " Heure de fin:" + elem.getHeureFin() + "<br/>");
@@ -198,9 +199,9 @@ public class Admin extends HttpServlet {
             String prenom;
             String age;
             String login;
-            String pw;
+            String password;
             String formation;
-            String heureD, heureF;
+            String anneeD, moisD, jourD, heureD, minD, duree;
             String idEnseignant;
             String idEnseignement;
             String nbCours;
@@ -220,7 +221,7 @@ public class Admin extends HttpServlet {
                             prenom = request.getParameter("prenom");
                             age = request.getParameter("age");
                             login = request.getParameter("login");
-                            pw = request.getParameter("pw");
+                            password = request.getParameter("password");
                             formation = request.getParameter("formation");
                             System.out.println("Nom :" + nom);
                             System.out.println("Prenom :" + prenom);
@@ -228,22 +229,30 @@ public class Admin extends HttpServlet {
                             System.out.println("Login :" + login);
                             Formation f = formationFacade.find(Long.valueOf(formation));
                             System.out.println("Formation ::" + f.getNom());
-                            //etudiantFacade.create(nom, prenom, Integer.valueOf(age), Integer.valueOf(login), pw, f);
+                            etudiantFacade.create(nom, prenom, Integer.valueOf(age), Integer.valueOf(login), password, f);
                             break;
                         case "Enseignant":
                             nom = request.getParameter("nom");
                             prenom = request.getParameter("prenom");
                             age = request.getParameter("age");
                             login = request.getParameter("login");
-                            pw = request.getParameter("pw");
-                            //enseignantFacade.create(nom, prenom, Integer.valueOf(age), Integer.valueOf(login), pw);
+                            password = request.getParameter("password");
+                            enseignantFacade.create(nom, prenom, Integer.valueOf(age), Integer.valueOf(login), password);
                             break;
                         case "Cours":
                             idEnseignement = request.getParameter("idEnseignement");
                             nom = request.getParameter("nom");
+                            anneeD = request.getParameter("anneeD");
+                            moisD = request.getParameter("moisD");
+                            jourD = request.getParameter("jourD");
                             heureD = request.getParameter("heureD");
-                            heureF = request.getParameter("heureF");
-                            //Date dd = new 
+                            minD = request.getParameter("minD");
+                            duree = request.getParameter("duree");
+                            System.out.println("Cours "+nom+" sauvegardé pour le :"+jourD+"/"+moisD+"/"+anneeD+" à "+heureD+":"+minD);
+                            
+                            Enseignement ens1 = enseignementFacade.find(Long.valueOf(idEnseignement));
+                            Cours c = coursFacade.create(nom, ens1);
+                            coursFacade.addHoraire(c, Integer.valueOf(anneeD), Integer.valueOf(moisD), Integer.valueOf(jourD), Integer.valueOf(heureD), Integer.valueOf(minD), Integer.valueOf(duree));
                             //faut convertir les heures ptin
                             //Cours c = new Cours()
                             
@@ -263,8 +272,7 @@ public class Admin extends HttpServlet {
                             
                             Enseignant en = enseignantFacade.find(Long.valueOf(idEnseignant));
                             enseignementFacade.create(nom, Integer.valueOf(nbSem), en);
-                            //en.setCoursCollection(new ArrayList());
-                            //en.getCoursCollection().add(coursFacade.find(l));
+
                             break;
                         default:
                             break;
@@ -346,8 +354,12 @@ public class Admin extends HttpServlet {
                         out.println("<form method='POST'>");
                         out.println("idEnseignement: <input type='text' name='idEnseignement'><br/>");
                         out.println("Nom: <input type='text' name='nom'><br/>");
-                        out.println("Heure début: <input type='text' name='heureD'><br/>");
-                        out.println("Heure fin: <input type='text' name='heureF'><br/>");
+                        out.println("Jour de début : <input type='text' name='jourD'><br/>");
+                        out.println("Mois de début : <input type='text' name='moisD'><br/>");
+                        out.println("Année de début: <input type='text' name='anneeD'><br/>");
+                        out.println("Heure de début : <input type='text' name='heureD'><br/>");
+                        out.println("Minutes de début : <input type='text' name='minD'><br/>");
+                        out.println("duree (min) : <input type='text' name='duree'><br/>");
                         out.println("<input type='submit'><br/>");
                         out.println("</form>");
                         out.println("<select name='pays' id='enseignement'>");

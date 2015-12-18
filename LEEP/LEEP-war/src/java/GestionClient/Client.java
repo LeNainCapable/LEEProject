@@ -6,6 +6,10 @@
 package GestionClient;
 
 
+import entity.Cours;
+import entity.Enseignement;
+import entity.Etudiant;
+import entity.Formation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -42,6 +46,28 @@ public class Client extends HttpServlet {
             out.println("<title>Commande Pizza</title>");  
             out.println("</head>");
             out.println("<body>");
+                        //Liste des cours
+            out.println("<h2> Liste des cours</h2>");
+            out.println("<p>");
+            /*
+            List lCours = coursFacade.findAll();
+            for (Iterator it = lCours.iterator(); it.hasNext();) {
+                Cours elem = (Cours) it.next();
+                Etudiant etu = etudiantFacade.find(1);
+
+                Formation formetu = formationFacade.find(etu.getIdFormation());
+                for (Iterator formiterator = formetu.getEnseignementCollection().iterator(); formiterator.hasNext();) {
+                    Enseignement ensiterator = (Enseignement) formiterator.next();
+                    if (elem.getIdEnseignement() == ensiterator) {
+                        out.println("Cours : <b>" + elem.getNom() + " </b> ");
+                    }
+                    out.println("Id : " + elem.getIdEnseignement().getNom() + elem.getHeureDebut() + "<br/>");
+                    out.println("Heure debut:" + elem.getHeureDebut() + " Heure de fin:" + elem.getHeureFin() + "<br/>");
+                }
+
+            }
+            out.println("</p>");
+            */
             /*List lStock = stockFacade.findAll();
             for (Iterator it = lStock.iterator(); it.hasNext();) {
                 Stock s = (Stock) it.next();
